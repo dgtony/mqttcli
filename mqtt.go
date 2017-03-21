@@ -74,7 +74,9 @@ func (m *MQTTClient) ConnectionLost(client MQTT.Client, reason error) {
 
 func (m *MQTTClient) onMessageReceived(client MQTT.Client, message MQTT.Message) {
 	log.Infof("topic:%s / msg:%s", message.Topic(), message.Payload())
-	fmt.Println(string(message.Payload()))
+	//fmt.Println(string(message.Payload()))
+	fmt.Printf("\ntopic: %s\nmessage: %s\n", message.Topic(), string(message.Payload()))
+
 }
 
 func getCertPool(pemPath string) (*x509.CertPool, error) {
