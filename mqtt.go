@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"sync"
+	"time"
 
 	log "github.com/Sirupsen/logrus"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
@@ -73,10 +74,10 @@ func (m *MQTTClient) ConnectionLost(client MQTT.Client, reason error) {
 }
 
 func (m *MQTTClient) onMessageReceived(client MQTT.Client, message MQTT.Message) {
+	ct := time.Now()
 	log.Infof("topic:%s / msg:%s", message.Topic(), message.Payload())
-	//fmt.Println(string(message.Payload()))
-	fmt.Printf("\ntopic: %s\nmessage: %s\n", message.Topic(), string(message.Payload()))
-
+	fmt.Printf("\n[r] => %02d:%02d:%02d.%03d\n", ct.Hour(), ct.Minute(), ct.Second(), int(ct.Nanosecond()/1e6))
+	fmt.Printf("[t] => %s\n[m] => %s\n", message.Topic(), string(message.Payload()))
 }
 
 func getCertPool(pemPath string) (*x509.CertPool, error) {
